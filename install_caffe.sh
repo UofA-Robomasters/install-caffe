@@ -12,6 +12,7 @@ sudo apt-get -y install --no-install-recommends libboost-all-dev
 sudo apt-get -y install libatlas-base-dev
 sudo apt-get -y install python-dev python-pip
 sudo apt-get -y install libgflags-dev libgoogle-glog-dev liblmdb-dev
+sudo apt-get -y install gfortran
 
 git clone https://github.com/BVLC/caffe.git "$CAFFE_ROOT"
 
