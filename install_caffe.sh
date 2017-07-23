@@ -8,22 +8,22 @@ WD=$PWD
 
 sudo apt-get update
 if [[ $? != 0 ]]; then
-    echo 'Error: apt-get'
+    echo 'Error: apt-get: update'
     exit -1
 fi
 sudo apt-get -y install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev protobuf-compiler
 if [[ $? != 0 ]]; then
-    echo 'Error: apt-get'
+    echo 'Error: apt-get: (1)'
     exit -1
 fi
 sudo apt-get -y install --no-install-recommends libboost-all-dev
 if [[ $? != 0 ]]; then
-    echo 'Error: apt-get'
+    echo 'Error: apt-get: (2)'
     exit -1
 fi
 sudo apt-get -y install libatlas-base-dev python-dev python-pip libgflags-dev libgoogle-glog-dev liblmdb-dev gfortran
 if [[ $? != 0 ]]; then
-    echo 'Error: apt-get'
+    echo 'Error: apt-get: (3)'
     exit -1
 fi
 
