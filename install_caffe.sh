@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Change this as needed:
-MAKE_FILE="Makefile.config.gpu_cudnn"
+MAKE_FILE="Makefile.config.cpu"
 
 CAFFE_ROOT="$HOME/Downloads/caffe"
 WD=$PWD
