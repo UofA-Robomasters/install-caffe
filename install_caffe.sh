@@ -7,24 +7,89 @@ CAFFE_ROOT="$HOME/Downloads/caffe"
 WD=$PWD
 
 sudo apt-get update
+if [[ $? != 0 ]]; then
+    echo 'Error: apt-get'
+    exit -1
+fi
 sudo apt-get -y install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev protobuf-compiler
+if [[ $? != 0 ]]; then
+    echo 'Error: apt-get'
+    exit -1
+fi
 sudo apt-get -y install --no-install-recommends libboost-all-dev
-sudo apt-get -y install libatlas-base-dev
-sudo apt-get -y install python-dev python-pip
-sudo apt-get -y install libgflags-dev libgoogle-glog-dev liblmdb-dev
-sudo apt-get -y install gfortran
+if [[ $? != 0 ]]; then
+    echo 'Error: apt-get'
+    exit -1
+fi
+sudo apt-get -y install libatlas-base-dev python-dev python-pip libgflags-dev libgoogle-glog-dev liblmdb-dev gfortran
+if [[ $? != 0 ]]; then
+    echo 'Error: apt-get'
+    exit -1
+fi
 
 git clone https://github.com/BVLC/caffe.git "$CAFFE_ROOT"
+if [[ $? != 0 ]]; then
+    echo 'Error: git clone failed'
+    exit -1
+fi
 
 sudo pip install --upgrade pip
+if [[ $? != 0 ]]; then
+    echo 'Error: failed to upgrade pip'
+    exit -1
+fi
+
 sudo pip install --upgrade -r "$CAFFE_ROOT/python/requirements.txt"
+if [[ $? != 0 ]]; then
+    echo 'Error: pip failed to install python requirements'
+    exit -1
+fi
 
 cp "$MAKE_FILE" "$CAFFE_ROOT/Makefile.config"
+if [[ $? != 0 ]]; then
+    echo 'Error: pip failed to install python requirements'
+    exit -1
+fi
+
+# Verify and set CUDA env:
+. "$HOME/.bashrc"
+if [[ $PATH != *"/usr/local/cuda/bin"* ]]; then
+    echo '' >> "$HOME/.bashrc"
+    echo '# CUDA env:' >> "$HOME/.bashrc"
+
+    PATH_STR='/usr/local/cuda/bin:$PATH'
+    echo "export PATH=\"$PATH_STR\"" >> "$HOME/.bashrc"
+
+    LD_LIBRARY_PATH_STR='/usr/local/cuda/lib:$LD_LIBRARY_PATH'
+    echo "export LD_LIBRARY_PATH=\"$LD_LIBRARY_PATH_STR\"" >> "$HOME/.bashrc"
+
+    LIBRARY_PATH_STR='/usr/local/cuda/lib:$LIBRARY_PATH'
+    echo "export LIBRARY_PATH=\"$LIBRARY_PATH_STR\"" >> "$HOME/.bashrc"
+    
+    . "$HOME/.bashrc"
+fi
+
 cd "$CAFFE_ROOT"
 make all
+if [[ $? != 0 ]]; then
+    echo 'Error: failed to compile caffe'
+    exit -1
+fi
 make test
+if [[ $? != 0 ]]; then
+    echo 'Error: failed to make test'
+    exit -1
+fi
 make runtest
+if [[ $? != 0 ]]; then
+    echo 'Error: runtest failed'
+    exit -1
+fi
 make distribute
+if [[ $? != 0 ]]; then
+    echo 'Error: failed to distribute caffe'
+    exit -1
+fi
 
 echo "" >> "$HOME/.bashrc"
 echo "# Caffe environment:" >> "$HOME/.bashrc"
