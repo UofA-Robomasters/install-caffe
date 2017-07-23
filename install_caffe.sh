@@ -52,14 +52,16 @@ if [[ $? != 0 ]]; then
 fi
 
 # Verify and set CUDA env:
-. "$HOME/.bashrc"
-if [[ $PATH != *"/usr/local/cuda/bin"* ]]; then
-    echo '' >> "$HOME/.bashrc"
-    echo '# CUDA env:' >> "$HOME/.bashrc"
-    echo 'export PATH="/usr/local/cuda/bin:$PATH"' >> "$HOME/.bashrc"
-    echo 'export LD_LIBRARY_PATH="/usr/local/cuda/lib:$LD_LIBRARY_PATH"' >> "$HOME/.bashrc"
-    echo 'export LIBRARY_PATH="/usr/local/cuda/lib:$LIBRARY_PATH"' >> "$HOME/.bashrc"
+if [[ $MAKE_FILE == 'Makefile.config.gpu_cudnn' ]]; then
     . "$HOME/.bashrc"
+    if [[ $PATH != *"/usr/local/cuda/bin"* ]]; then
+        echo '' >> "$HOME/.bashrc"
+        echo '# CUDA env:' >> "$HOME/.bashrc"
+        echo 'export PATH="/usr/local/cuda/bin:$PATH"' >> "$HOME/.bashrc"
+        echo 'export LD_LIBRARY_PATH="/usr/local/cuda/lib:$LD_LIBRARY_PATH"' >> "$HOME/.bashrc"
+        echo 'export LIBRARY_PATH="/usr/local/cuda/lib:$LIBRARY_PATH"' >> "$HOME/.bashrc"
+        . "$HOME/.bashrc"
+    fi
 fi
 
 cd "$CAFFE_ROOT"
