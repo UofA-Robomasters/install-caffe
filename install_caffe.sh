@@ -47,7 +47,7 @@ fi
 
 cp "$MAKE_FILE" "$CAFFE_ROOT/Makefile.config"
 if [[ $? != 0 ]]; then
-    echo 'Error: pip failed to install python requirements'
+    echo 'Error: failed to copy makefile, check if the path is correct'
     exit -1
 fi
 
