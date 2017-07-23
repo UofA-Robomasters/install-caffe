@@ -87,9 +87,7 @@ if [[ $? != 0 ]]; then
 fi
 
 # Verify and set Caffe env:
-if [[ grep -Fxq "Caffe" "$HOME/.bashrc" ]]; then
-    exit 0
-else
+if [[ ! grep -Fxq "Caffe" "$HOME/.bashrc" ]]; then
     echo "" >> "$HOME/.bashrc"
     echo "# Caffe environment:" >> "$HOME/.bashrc"
     STR_CAFFE_ROOT='export CAFFE_ROOT='
