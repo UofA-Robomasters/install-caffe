@@ -84,11 +84,17 @@ if [[ $? != 0 ]]; then
     exit -1
 fi
 
-echo "" >> "$HOME/.bashrc"
-echo "# Caffe environment:" >> "$HOME/.bashrc"
-STR_CAFFE_ROOT='export CAFFE_ROOT='
-echo "$STR_CAFFE_ROOT\"$CAFFE_ROOT\"" >> "$HOME/.bashrc"
-echo 'export PYTHONPATH="$CAFFE_ROOT/distribute/python:$PYTHONPATH"' >> "$HOME/.bashrc"
-echo 'export LD_LIBRARY_PATH="$CAFFE_ROOT/distribute/lib:$LD_LIBRARY_PATH"' >> "$HOME/.bashrc"
-echo 'export PATH="$CAFFE_ROOT/distribute/bin:$PATH"' >> "$HOME/.bashrc"
-source "$HOME/.bashrc"
+# Verify and set Caffe env:
+if [[ grep -Fxq "Caffe" "$HOME/.bashrc" ]]; then
+    exit 0
+else
+    echo "" >> "$HOME/.bashrc"
+    echo "# Caffe environment:" >> "$HOME/.bashrc"
+    STR_CAFFE_ROOT='export CAFFE_ROOT='
+    echo "$STR_CAFFE_ROOT\"$CAFFE_ROOT\"" >> "$HOME/.bashrc"
+    echo 'export PYTHONPATH="$CAFFE_ROOT/distribute/python:$PYTHONPATH"' >> "$HOME/.bashrc"
+    echo 'export LD_LIBRARY_PATH="$CAFFE_ROOT/distribute/lib:$LD_LIBRARY_PATH"' >> "$HOME/.bashrc"
+    echo 'export PATH="$CAFFE_ROOT/distribute/bin:$PATH"' >> "$HOME/.bashrc"
+    . "$HOME/.bashrc"
+fi
+echo 'installation complete!'
