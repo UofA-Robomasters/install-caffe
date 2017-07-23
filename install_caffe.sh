@@ -27,10 +27,12 @@ if [[ $? != 0 ]]; then
     exit -1
 fi
 
-git clone https://github.com/BVLC/caffe.git "$CAFFE_ROOT"
-if [[ $? != 0 ]]; then
-    echo 'Error: git clone failed'
-    exit -1
+if [ ! -d "$CAFFE_ROOT" ]; then
+    git clone https://github.com/BVLC/caffe.git "$CAFFE_ROOT"
+    if [[ $? != 0 ]]; then
+        echo 'Error: git clone failed'
+        exit -1
+    fi
 fi
 
 sudo pip install --upgrade pip
