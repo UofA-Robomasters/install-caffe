@@ -56,16 +56,9 @@ fi
 if [[ $PATH != *"/usr/local/cuda/bin"* ]]; then
     echo '' >> "$HOME/.bashrc"
     echo '# CUDA env:' >> "$HOME/.bashrc"
-
-    PATH_STR='/usr/local/cuda/bin:$PATH'
-    echo "export PATH=\"$PATH_STR\"" >> "$HOME/.bashrc"
-
-    LD_LIBRARY_PATH_STR='/usr/local/cuda/lib:$LD_LIBRARY_PATH'
-    echo "export LD_LIBRARY_PATH=\"$LD_LIBRARY_PATH_STR\"" >> "$HOME/.bashrc"
-
-    LIBRARY_PATH_STR='/usr/local/cuda/lib:$LIBRARY_PATH'
-    echo "export LIBRARY_PATH=\"$LIBRARY_PATH_STR\"" >> "$HOME/.bashrc"
-    
+    echo 'export PATH="/usr/local/cuda/bin:$PATH"' >> "$HOME/.bashrc"
+    echo 'export LD_LIBRARY_PATH="/usr/local/cuda/lib:$LD_LIBRARY_PATH"' >> "$HOME/.bashrc"
+    echo 'export LIBRARY_PATH="/usr/local/cuda/lib:$LIBRARY_PATH"' >> "$HOME/.bashrc"
     . "$HOME/.bashrc"
 fi
 
